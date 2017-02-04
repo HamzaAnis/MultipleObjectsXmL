@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,6 +29,23 @@ namespace MultipleObjectsXmL
             movieClssObj.movieList.Add(secondMov);
             var movList = new List<Movie>() {firstMov, secondMov};
 
+
+            var testing =new List<Room>();
+            var temp=new Room();
+            temp.IsBooked = false;
+            temp.RoomNO = "sd";
+            temp.Type = "as";
+            testing.Add(temp);
+
+            temp.IsBooked = false;
+            temp.RoomNO = "Hamza";
+            temp.Type = "Anis";
+
+
+            testing.Add(temp);
+
+
+            WritetoXml2(testing, "c:\\hamza\\2.xml");
             WritetoXml(movieClssObj.movieList, "c:\\hamza\\1.xml");
             Console.WriteLine("written");
             Console.Read();
@@ -37,6 +55,15 @@ namespace MultipleObjectsXmL
 
         // The static class and funcion that creates the xml file 
         public static void WritetoXml(List<Movie> movies, string filePath)
+        {
+            var xls = new XmlSerializer(typeof(List<Movie>));
+
+            TextWriter tw = new StreamWriter(filePath);
+            xls.Serialize(tw, movies);
+            tw.Close();
+        }
+
+        public static void WritetoXml2(List<Room> movies, string filePath)
         {
             var xls = new XmlSerializer(typeof(List<Movie>));
 
@@ -80,7 +107,16 @@ public class Movie
 
     public int Rating { get; set; }
 
-
     public DateTime ReleaseDate { get; set; }
+}
+
+
+internal class Room
+{
+    public bool IsBooked { get; set; }
+
+    public string RoomNO { get; set; }
+
+    public string Type { get; set; }
 }
 
