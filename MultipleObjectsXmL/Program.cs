@@ -9,34 +9,36 @@ using System.Xml.Serialization;
 
 namespace MultipleObjectsXmL
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Movie firstMov = new Movie();
+            var firstMov = new Movie();
             firstMov.Title = "Shrek";
             firstMov.Rating = 2;
             firstMov.ReleaseDate = DateTime.Now;
 
-            Movie secondMov = new Movie();
+            var secondMov = new Movie();
             secondMov.Title = "Hamza Anis";
             secondMov.Rating = 4;
             secondMov.ReleaseDate = DateTime.Now;
 
-            Movies moviesObj = new Movies();
-            moviesObj.movieList.Add(firstMov);
-            moviesObj.movieList.Add(secondMov);
-            List<Movie> movList = new List<Movie>() {firstMov, secondMov};
+            var movieClssObj = new MovieClss();
+            movieClssObj.movieList.Add(firstMov);
+            movieClssObj.movieList.Add(secondMov);
+            var movList = new List<Movie>() {firstMov, secondMov};
 
-            WritetoXml(moviesObj.movieList, "c:\\hamza\\1.xml");
+            WritetoXml(movieClssObj.movieList, "c:\\hamza\\1.xml");
+            Console.WriteLine("written");
+            Console.Read();
 
-            ReadFromXml("c:\\hamza\\1.xml");
+            //   ReadFromXml("c:\\hamza\\1.xml");
         }
 
         // The static class and funcion that creates the xml file 
         public static void WritetoXml(List<Movie> movies, string filePath)
         {
-            XmlSerializer xls = new XmlSerializer(typeof(List<Movie>));
+            var xls = new XmlSerializer(typeof(List<Movie>));
 
             TextWriter tw = new StreamWriter(filePath);
             xls.Serialize(tw, movies);
@@ -45,7 +47,7 @@ namespace MultipleObjectsXmL
 
         public static List<Movie> ReadFromXml(string filePath)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(List<Movie>));
+            var deserializer = new XmlSerializer(typeof(List<Movie>));
             TextReader tr = new StreamReader(@filePath);
             List<Movie> movie;
             movie = (List<Movie>) deserializer.Deserialize(tr);
@@ -65,7 +67,7 @@ namespace MultipleObjectsXmL
     }
 }
 
-public class Movies
+public class MovieClss
 {
     public List<Movie> movieList = new List<Movie>();
 }
